@@ -1,7 +1,7 @@
 @extends('templates.blank')
 
 @section('content')
-<h3 align="center">Trabajos realizados E-lashes</h3>
+<h3 align="center">Trabajos realizados E-Lashes</h3>
 <div class="row">
 	
 {!! Form::open(['route'=>'trabajos.index','method'=>'GET', 'class'=>'form-search']) !!}

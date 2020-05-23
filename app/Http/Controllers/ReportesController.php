@@ -31,7 +31,7 @@ class ReportesController extends Controller
     public function operador(Request $request)
     {
     	//$work = Trabajo::where('id_trabajador',1)->where('fecha','2018-03-15')->get();
-    	$operadores = Trabajador::lists('nombre','id');
+    	$operadores = Trabajador::pluck('nombre','id');
     	$trabajo = Trabajo::comision($request->operador,$request->fecha)->get();
     	return view('reportes/operador')->with('trabajo',$trabajo)->with('operadores',$operadores);
     }

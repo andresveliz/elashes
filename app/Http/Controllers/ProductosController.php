@@ -29,7 +29,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        $categoria = Categoria::lists('nombre','id');
+        $categoria = Categoria::pluck('nombre','id');
         return view('productos/create')->with('categoria',$categoria);
     }
 
@@ -73,7 +73,9 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto = Producto::Find($id);
+        $categoria = Categoria::pluck('nombre','id');
+        return view('productos/edit')->with('producto',$producto)->with('categoria',$categoria);
     }
 
     /**
@@ -85,7 +87,15 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto = Producto::Find($id);
+        $producto->nombre = $request->nombre;
+        $producto->valor = $request->valor;
+        $producto->id_categoria = $request->categoria;
+
+        $producto->save();
+        Flash::success("Se ha modificado el producto de forma exitosa!");
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -114,7 +124,7 @@ class ProductosController extends Controller
         return redirect()->route('ventas.index');
         }
         else{
-           Flash::warning('No cuenta con suficiente stock'); 
+           Flash::warning('Error en la venta: No cuenta con suficiente stock'); 
            return redirect()->route('ventas.create');
         }
        

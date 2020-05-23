@@ -31,7 +31,7 @@ class ReservasController extends Controller
     {
         //
         $reservas= Reserva::all();
-        $servicios = Servicio::lists('nombre','id');
+        $servicios = Servicio::pluck('nombre','id');
         return view('reservas.index')->with('servicios',$servicios)->with('reservas',$reservas);
     }
 
@@ -140,7 +140,7 @@ class ReservasController extends Controller
     public function confirmar($id)
     {
        
-        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DSC')->first();
+        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DESC')->first();
 
         $fecha = $ultimo->fecha;
         if ( \Carbon\Carbon::now()->format('m') > \Carbon\Carbon::parse($ultimo->fecha)->format('m')) {
@@ -154,8 +154,8 @@ class ReservasController extends Controller
         
         $largo = str_pad($print,4,'0',STR_PAD_LEFT);
         $reserva = Reserva::find($id);
-        $servicios = Servicio::lists('nombre','id');
-        $operador = Trabajador::lists('nombre','id');
+        $servicios = Servicio::pluck('nombre','id');
+        $operador = Trabajador::pluck('nombre','id');
         
         return view('reservas.confirmar')->with('servicios',$servicios)->with('reserva',$reserva)->with('ultimo',$ultimo)->with('largo',$largo)->with('operador',$operador)->with('print',$print);
     }

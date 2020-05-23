@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>E-lashes</title>
+		<title>E-Lashes</title>
 
 		<meta name="description" content="with draggable and editable events" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -77,7 +77,7 @@ $(document).ready(function(){
 					<a href="index.html" class="navbar-brand">
 						<small>
 							<i class="fa fa-eye"></i>
-							E - lashes Oruro
+							E - Lashes Oruro
 						</small>
 					</a>
 				</div>
@@ -386,17 +386,19 @@ $(document).ready(function(){
 
 			<div class="main-content">
 				<div class="main-content-inner">
-					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+					<!-- <div class="breadcrumbs ace-save-state" id="breadcrumbs">
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="#"></a>
 							</li>
-							<li class="active">Calendar</li>
+							<li class="active"></li>
 						</ul><!-- /.breadcrumb -->
 
-						<!-- /.nav-search -->
-					</div>
+						<!-- /.nav-search 
+
+					</div>-->
+					
 
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
@@ -438,7 +440,7 @@ $(document).ready(function(){
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">E-lashes Oruro</span>
+							<span class="blue bolder">E-Lashes Oruro</span>
 							Developed by Andras Crow &copy; 2018
 						</span>
 

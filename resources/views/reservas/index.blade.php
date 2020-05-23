@@ -1,7 +1,7 @@
 @extends('templates.blank')
 
 @section('content')
-
+<h3 align="center">Calendario de Reservas</h3>
 <div class="row">
 	<div class="col"></div>
 	<div class="col-7"><div id="calendario"></div> </div>
@@ -25,7 +25,8 @@
 	$(document).ready(function(){
         $("#btnModificar").click(function(){
             var id= $("#id").html();
-            location.href = "reservas/"+id+"/edit";
+            $("#EditarReserva").modal();
+            //location.href = "reservas/"+id+"/edit";
             
 
         })
@@ -49,12 +50,18 @@
 
 		$('#calendario').fullCalendar({
             height:600,
+            defaultTimedEventDuration: '01:00:00',
+            forceEventDuration: true,
             minTime:{
-                Duration:"08:00:00"
+                Duration:"24:00:00"
             },
+            
             
             defaultView:'agendaWeek',
             slotLabelFormat: 'h:mm a',
+            
+            //Duration, default: '01:00' (1 hour),
+            
             
            
 			header:{
@@ -62,33 +69,36 @@
 				center:'title',
 				right:'month,agendaWeek,agendaDay'
 			},
-
+      
 		dayClick:function(date,jsEvent,view){
 				
 				
-                $("#txtfecha").val(date.format());
+                $("#txtfecha").val(date.format('YYYY-MM-DD'));
+                $("#txthora").val(date.format('HH:mm'));
 				$("#exampleModal").modal();
 			},	
             eventSources:[{
 
-                
+              
                 events:[
-                
+                  
                 @foreach($reservas as $res)
-               
+                
                 {
                     title: '{{$res->nombre}}'+' '+'{{$res->apellido}}',
                     id: '{{$res->id}}',
                     servicio: '{{$res->servicio->nombre}}',
                     celular: '{{$res->celular}}',
                     detalle: '{{$res->detalle}}',
-                    fecha: '{{$res->fecha}}'+' '+'{{$res->hora}}',
+                    fecha: '{{$res->fecha}}',
                     start: '{{$res->fecha}}'+' '+'{{$res->hora}}',
-                    end: '{{$res->fecha}}'+' '+'{{$res->hora+1}}',
+                    //end: '{{$res->fecha}}'+' '+'{{$res->hora}}',
                     color: '{{$res->servicio->categoria->color}}',
-                                             
+                    
+                                        
                 },
                 @endforeach
+                
                 ],
                 
                 
@@ -104,6 +114,7 @@
             $("#title").html(calEvent.title);
             $("#celular").html(calEvent.celular);
             $("#start").html(calEvent.fecha);
+            
             $("#detalle").html(calEvent.detalle);
             $("#mostrarModal").modal();
         }
@@ -159,7 +170,7 @@
         <div class="form-group">
         	{!!Form::label('Hora','Hora:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
         	<div class="col-sm-9">
-        	{!!Form::time('hora',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el nombre','required']) !!}
+        	{!!Form::time('hora',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el nombre','required', 'id'=>'txthora']) !!}
         	</div>
         </div>
         <div class="form-group">
@@ -235,6 +246,81 @@
     </div>
   </div>
 </div>
+<!-- Modal editar-->
+<div class="modal fade" id="EditarReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong><h5 class="modal-title" id="servicio" align="center"></h5></strong><label id="id"></label>
+        
+      </div>
+      <div class="modal-body">
+        {!!Form::open(array('action'=>['ReservasController@store'],'method'=>'POST','id'=>'reserva','class'=>'form-horizontal')) !!}
+        <div class="form-group">
+        	{!!Form::label('Nombre','Nombre cliente:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::label('nombre',null,['class'=>'col-xs-10 col-sm-8','id'=>'title']) !!}
+        	</div>
+        </div>
+       <div class="form-group">
+        	{!!Form::label('Apellido','Apellido cliente:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::text('apellido',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el apellido','required','id'=>'apellido']) !!}
+        	</div>
+        </div>
+        <div class="form-group">
+        	{!!Form::label('Celular','Celular:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::text('celular',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el celular','required']) !!}
+        	</div>
+        </div>
+        <div class="form-group">
+        	{!!Form::label('Servicio','Servicio:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::select('servicio',$servicios,null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Seleccione el servicio','required']) !!}
+        	</div>
+        </div>
+         <div class="form-group">
+            {!!Form::label('Fecha','Fecha:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+            <div class="col-sm-9">
+            {!!Form::text('fecha',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el nombre','required','id'=>'txtfecha']) !!}
+            </div>
+        </div>
+        <div class="form-group">
+        	{!!Form::label('Hora','Hora:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::time('hora',null,['class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Ingrese el nombre','required']) !!}
+        	</div>
+        </div>
+        <div class="form-group">
+        	{!!Form::label('Detalle','Detalle:',['class'=>'col-sm-3 control-label no-padding-right'] ) !!}
+        	<div class="col-sm-9">
+        	{!!Form::textarea('detalle',null,['rows'=>'5', 'class'=>'col-xs-10 col-sm-8', 'placeholder'=>'Detalle de la reserva']) !!}
+        	</div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Realizar reserva</button>
+      </div>
+      {!!Form::close() !!}
+
+
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="btnEliminar"><i class="menu-icon fa fa-trash"></i>Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnConfirmar">Confirmar</button>
+         <button type="button" class="btn btn-success" id="btnModificar">Modificar</button>        
+      </div>
+      {!!Form::close() !!}
+
+
+    </div>
+  </div>
+</div>
+
 
 <div class="modal" tabindex="-1" role="dialog" id="confirmar">
   <div class="modal-dialog" role="document">

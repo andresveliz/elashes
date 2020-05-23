@@ -42,8 +42,8 @@
                 <td>{{ $ser->valor }}</td>
                 <td>{{ $ser->cantidad }}</td>
                 
-                <td><a href="{{ route('servicios.edit',$ser->id) }}" class="btn btn-xs btn-success ">Editar</a>
-                <a href="{{ route('servicios.edit',$ser->id) }}" class="btn btn-xs btn-success ">Recibir</a></td>
+                <td><a href="{{ route('productos.edit',$ser->id) }}" class="btn btn-xs btn-success ">Editar</a>
+                <a href="{{ route('productos.edit',$ser->id) }}" class="btn btn-xs btn-success ">Recibir</a></td>
                 
             </tr>
             @endforeach

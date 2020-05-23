@@ -49,16 +49,16 @@
             Detalle de operador/a {{$ope->nombre}}
             </h4>
 
-        <div class="widget-toolbar">
-            <a href="#" data-action="collapse">
+        <div class="widget-toolbar" >
+            <a href="#" data-action="collapse" >
             <i class="ace-icon fa fa-chevron-up"></i>
             </a>
         </div>
         </div>
 
-        <div class="widget-body">
+        <div class="widget-body" >
     <div>
-    <table class="table table-light table-hover dropdown">
+    <table class="table table-light table-hover dropdown"  >
         <thead>
             <th>Nro</th>
             <th>Cod</th>

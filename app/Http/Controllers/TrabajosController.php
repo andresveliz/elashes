@@ -20,7 +20,7 @@ class TrabajosController extends Controller
      */
     public function index(Request $request)
     {
-       $trabajos= Trabajo::busqueda($request->busca)->orderBy('id','DSC')->paginate(10);
+       $trabajos= Trabajo::busqueda($request->busca)->orderBy('id','DESC')->paginate(10);
         return view('trabajos.index')->with('trabajos',$trabajos);
     }
 
@@ -31,7 +31,7 @@ class TrabajosController extends Controller
      */
     public function create()
     {
-        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DSC')->first();
+        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DESC')->first();
         //$ultimo = $ultimos->numero;
         $fecha = $ultimo->fecha;
         if ( \Carbon\Carbon::now()->format('m') > \Carbon\Carbon::parse($ultimo->fecha)->format('m')) {
@@ -44,8 +44,8 @@ class TrabajosController extends Controller
         }
        
         $largo = str_pad($print,4,'0',STR_PAD_LEFT);
-        $servicios = Servicio::lists('nombre','id');
-        $operador = Trabajador::lists('nombre','id');
+        $servicios = Servicio::pluck('nombre','id');
+        $operador = Trabajador::pluck('nombre','id');
         return view('trabajos.create')->with('servicios',$servicios)->with('largo',$largo)->with('operador',$operador)->with('print',$print);
     }
 
@@ -58,7 +58,7 @@ class TrabajosController extends Controller
     public function store(Request $request)
     {
         //dd($request);
-        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DSC')->first();
+        $ultimo = Trabajo::select('numero','fecha')->orderBy('id','DESC')->first();
 
         $trabajo = new Trabajo;
         $trabajo->nombre = $request->nombre;
@@ -98,8 +98,8 @@ class TrabajosController extends Controller
     public function edit($id)
     {
         $trabajo = Trabajo::find($id);
-        $servicios = Servicio::lists('nombre','id');
-        $trabajadores = Trabajador::lists('nombre','id');
+        $servicios = Servicio::pluck('nombre','id');
+        $trabajadores = Trabajador::pluck('nombre','id');
         return view('trabajos.edit')->with('trabajo',$trabajo)->with('servicios',$servicios)->with('trabajadores',$trabajadores);
     }
 
@@ -110,7 +110,7 @@ class TrabajosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Restaurante $restaurante, $id)
     {
         $trabajo = Trabajo::find($id);
         $trabajo->nombre = $request->nombre;
@@ -123,7 +123,7 @@ class TrabajosController extends Controller
         $trabajo->id_trabajador = $request->trabajador;
         
         $trabajo->save();
-        Flash::success("Se ha modificado la reserva de forma exitosa!");
+        Flash::success("Se ha modificado el trabajo de forma exitosa!");
 
         return redirect()->route('trabajos.index');
     }

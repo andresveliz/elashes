@@ -452,7 +452,7 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">E-lashes Oruro</span>
+							<span class="blue bolder">E-Lashes Oruro</span>
 							Developed by Andras Crow &copy; 2018
 						</span>
 

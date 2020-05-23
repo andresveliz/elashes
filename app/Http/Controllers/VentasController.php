@@ -18,7 +18,7 @@ class VentasController extends Controller
      */
     public function index(Request $request)
     {
-        $ventas= Venta::busqueda($request->busca)->orderBy('id','DSC')->paginate(10);
+        $ventas= Venta::busqueda($request->busca)->orderBy('id','DESC')->paginate(10);
         return view('ventas.index')->with('ventas',$ventas);
     }
 
@@ -29,9 +29,9 @@ class VentasController extends Controller
      */
     public function create()
     {
-        $operadores = Trabajador::lists('nombre','id');
-        $precio = Producto::lists('valor','id');
-        $productos = Producto::lists('nombre','id');
+        $operadores = Trabajador::pluck('nombre','id');
+        $precio = Producto::pluck('valor','id');
+        $productos = Producto::pluck('nombre','id');
         return view('ventas.create')->with('operadores',$operadores)->with('productos',$productos)->with('precio',$precio);
     }
 
@@ -78,7 +78,13 @@ class VentasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ventas = Venta::Find($id);
+        $operadores = Trabajador::pluck('nombre','id');
+        $precio = Producto::pluck('valor','id');
+        $productos = Producto::pluck('nombre','id');
+        return view('ventas.edit')->with('ventas',$ventas)->with('operadores',$operadores)->with('productos',$productos)->with('precio',$precio);
+
+
     }
 
     /**

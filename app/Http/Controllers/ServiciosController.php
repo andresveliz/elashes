@@ -34,7 +34,7 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        $categoria = Categoria_servicio::lists('nombre','id');
+        $categoria = Categoria_servicio::pluck('nombre','id');
         return view('servicios.create')->with('categoria',$categoria);
     }
 

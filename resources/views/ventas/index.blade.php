@@ -44,7 +44,7 @@
                 <td>{{ $ser->fecha }}</td>
                 <td>{{ $ser->operador->nombre }}</td>
                 
-                <td><a href="{{ route('servicios.edit',$ser->id) }}" class="btn btn-success btn-xs">Editar</a></td>
+                <td><a href="{{ route('ventas.edit',$ser->id) }}" class="btn btn-success btn-xs">Editar</a></td>
                 
                  
     
